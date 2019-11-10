@@ -3,9 +3,6 @@
 #	print ("Welcome to closest to 21")
 import random
 class Player:
-   'Common base class for all employees'
-   empCount = 0
-
 	def __init__(self, name,isai):
 		#playername
 		self.name = name
@@ -16,14 +13,14 @@ class Player:
 		#current number player have
 		self.curnumber=0
 		#AI risk managment
-		self.ainumberaim=random.radint(15,21)
+		self.ainumberaim=random.randint(15,21)
 		self.aimax=0
 
 	def dealNumber(self,number):
 		#set new number value
 		self.curnumber=self.curnumber+number
 	def askhold(self):
-		ask=input("player {0}! Your value is currently: {1}. Do you hold? y for yes n for no" format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
+		ask=input("player {0}! Your value is currently: {1}. Do you hold? y or n: ".format(self.name,self.curnumber))
 		if ask=='y':
 			self.hold=True
 			return True
@@ -35,19 +32,19 @@ class Player:
 			return False
 	def askai(self):
 		#ai tries to make a chanse to go closer it might go over if player beat their number in a atempt to win
-		print("AI turn:")
+		print("player %s turn:"%self.name)
 		if self.ainumberaim<self.curnumber:
 			print("Ai got the value %d it choose to not continiue."%self.curnumber)
 			self.hold=True
 			return True
-		elif self.curnumber < aimax and aimax >20:
+		elif self.curnumber < self.aimax and self.aimax >20:
 			print("Ai got the value %d it choose to not continiue."%self.curnumber)
 			return True
 		else:
 			print("Ai got the value %d it choose to continiue."%self.curnumber)
 			return False
 	def aimaxincrease(self, newnumb):
-		if aimax< newnumb:
+		if self.aimax< newnumb:
 			self.aimax=newnumb
 		return self.aimax
 
@@ -67,7 +64,7 @@ class Game:
 	def Runnloop(self):
 		#all active players
 		self.activeplayers=len(self.playerlist)
-		print("There are " +players+"players")
+		print("There are " +str(self.activeplayers)+"players")
 
 		#start the loop
 		while self.game:
@@ -77,7 +74,7 @@ class Game:
 					if player.hold:
 						print("Holding player...")
 						continue
-					player.dealnumber(random.radint(1,13))
+					player.dealNumber(random.randint(1,13))
 					self.game=True
 					if player.curnumber == 21:
 						player.hold=True
@@ -99,7 +96,8 @@ class Game:
 					if r:
 						self.activeplayers-=1
 				else:
-					print ("player {0} is holding with value: {1}"format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
+					print ("player {0} is holding with value: {1}".format(player.name,player.curnumber))
+					self.activeplayers-=1
 				#to see if game has ended
 				self.aimaxgame=player.aimaxincrease(self.aimaxgame)
 			print("End turn...")
