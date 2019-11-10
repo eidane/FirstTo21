@@ -34,25 +34,33 @@ class Game:
 	def __init__(self,):
 		self.playerlist=[]
 		self.game=True
+		self.activeplayers={}
 		print ("hello, lets play: Closest to 21")
 		print ("choose how many players, if only one player there will be 1 AI")
-	def startGame(self):
-		#starts the game
-
-		pass
 
 	def Runnloop(self):
 		#run game turn
+		self.activeplayers
+
+		for player in playerlist
 		while self.game:
 			for player in self.playerlist:
 				if not player.hold:
 					player.askhold()
 					player.dealnumber(random.radint(1,13))
+					self.game=True
 					if player.curnumber == 21:
 						player.hold=True
 						print("You got to 21! Auto holding...")
+						self.game=False
 				else:
+
+					self.
 					print ("player %s is holding with value: %d"dict(player.name, player.curnumber))
+				#to see if game has ended
+				
+			print("End turn...")
+
 		
 	def playeraction(self):
 		pass
