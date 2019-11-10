@@ -96,22 +96,35 @@ class Game:
 					if r:
 						self.activeplayers-=1
 				else:
-					print ("player {0} is holding with value: {1}".format(player.name,player.curnumber))
+					print ("player {0} is holding with the value: {1}".format(player.name,player.curnumber))
 					self.activeplayers-=1
 				#to see if game has ended
 				self.aimaxgame=player.aimaxincrease(self.aimaxgame)
+				if player.curnumber==self.aimaxgame:
+					self.first=player.name
 			if self.activeplayers<=0:
 				self.game=False
 				continue
 			print("End turn...")
 		print("Game over!")
 		print("Results:")
-		for player in playerlist:
-			if player.curnumber==self.aimaxgame:
-				print("player name: "+player.name+". Number: "+player.curnumber +". You winn")
-			else:
-				print("player name: "+player.name+". Number: "+player.curnumber)
+		print("Firstplace goes to:"+self.first+". with the number: "+self.aimaxgame)
 
+
+
+		ask=input("play agen? y or n: ")
+		if ask=='y':
+			#reset
+			self.game=True
+			self.activeplayers=0
+			self.aimaxgame=0
+			self.first=""
+			self.Runnloop()
+		elif ask=='n':
+			print("Exiting gameloop.")
+		else: 
+			print ("Not valid answer... Exiting")
+			
 		
 	def playeraction(self):
 		pass
@@ -123,7 +136,7 @@ class Game:
 			print ("Not a valid input need valid number...")
 			self.addPlayers()
 		x=0
-		if players and players >1 and players<10 and players <=1:	
+		if players and players >1 and players<10:	
 			for x in range(players):
 				playername= input("Player name:")
 				player=Player(playername,False)
