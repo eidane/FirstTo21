@@ -34,14 +34,14 @@ class Player:
 		#ai tries to make a chanse to go closer it might go over if player beat their number in a atempt to win
 		print("player %s turn:"%self.name)
 		if self.ainumberaim<self.curnumber:
-			print("Ai got the value %d it choose to not continiue."%self.curnumber)
+			print("Ai got the value %d it choose to not continue."%self.curnumber)
 			self.hold=True
 			return True
-		elif self.curnumber < self.aimax and self.aimax >20:
-			print("Ai got the value %d it choose to not continiue."%self.curnumber)
+		elif self.curnumber < self.aimax and self.curnumber <=20:
+			print("Ai got the value %d it choose to not continue."%self.curnumber)
 			return True
 		else:
-			print("Ai got the value %d it choose to continiue."%self.curnumber)
+			print("Ai got the value %d it choose to continue."%self.curnumber)
 			return False
 	def aimaxincrease(self, newnumb):
 		if self.aimax< newnumb:
@@ -100,7 +100,17 @@ class Game:
 					self.activeplayers-=1
 				#to see if game has ended
 				self.aimaxgame=player.aimaxincrease(self.aimaxgame)
+			if self.activeplayers<=0:
+				self.game=False
+				continue
 			print("End turn...")
+		print("Game over!")
+		print("Results:")
+		for player in playerlist:
+			if player.curnumber==self.aimaxgame:
+				print("player name: "+player.name+". Number: "+player.curnumber +". You winn")
+			else:
+				print("player name: "+player.name+". Number: "+player.curnumber)
 
 		
 	def playeraction(self):
@@ -113,7 +123,7 @@ class Game:
 			print ("Not a valid input need valid number...")
 			self.addPlayers()
 		x=0
-		if players and players!=1 and players<10 and players <=1:	
+		if players and players >1 and players<10 and players <=1:	
 			for x in range(players):
 				playername= input("Player name:")
 				player=Player(playername,False)
@@ -138,4 +148,4 @@ class Game:
 
 game=Game()
 game.addPlayers()
-game.Runnloop()
+game.Runnloop() 
