@@ -7,12 +7,18 @@ class Player:
    empCount = 0
 
 	def __init__(self, name,isai):
+		#playername
 		self.name = name
+		#stop handing to me
 		self.hold = False
+		#I am not real
 		self.isai = isai
+		#current number player have
 		self.curnumber=0
+		#AI risk managment
 		self.ainumberaim=random.radint(15,21)
-		self.activeplayers=0
+		self.aimax=0
+
 	def dealNumber(self,number):
 		#set new number value
 		self.curnumber=self.curnumber+number
@@ -20,49 +26,82 @@ class Player:
 		ask=input("player {0}! Your value is currently: {1}. Do you hold? y for yes n for no" format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
 		if ask=='y':
 			self.hold=True
+			return True
 		elif ask=='n':
+			return False
 		else: 
 			print ("Not valid answer...")
 			self.askhold()
+			return False
 	def askai(self):
+		#ai tries to make a chanse to go closer it might go over if player beat their number in a atempt to win
 		print("AI turn:")
-		if ainumberaim<curnumber:
-			print("Ai got the value %d it choose to not continiue."%curnumber)
+		if self.ainumberaim<self.curnumber:
+			print("Ai got the value %d it choose to not continiue."%self.curnumber)
 			self.hold=True
+			return True
+		elif self.curnumber < aimax and aimax >20:
+			print("Ai got the value %d it choose to not continiue."%self.curnumber)
+			return True
 		else:
-			print("Ai got the value %d it choose to continiue."%curnumber)
+			print("Ai got the value %d it choose to continiue."%self.curnumber)
+			return False
+	def aimaxincrease(self, newnumb):
+		if aimax< newnumb:
+			self.aimax=newnumb
+		return self.aimax
+
 class Game:
 	def __init__(self,):
+		#list of players
 		self.playerlist=[]
+		#game state
 		self.game=True
+		#how many players ingame
+		self.activeplayers=0
+		#aimax 
+		self.aimaxgame=0
 		print ("hello, lets play: Closest to 21")
 		print ("choose how many players, if only one player there will be 1 AI")
 
 	def Runnloop(self):
-		#run game turn
+		#all active players
 		self.activeplayers=len(self.playerlist)
-		print("There are currently " +players+"players")
-		for player in self.playerlist
+		print("There are " +players+"players")
+
+		#start the loop
 		while self.game:
+			#run game turn
 			for player in self.playerlist:
 				if not player.hold:
-					player.askhold()
+					if player.hold:
+						print("Holding player...")
+						continue
 					player.dealnumber(random.radint(1,13))
 					self.game=True
 					if player.curnumber == 21:
 						player.hold=True
 						self.activeplayers-=1
 						print("You got to 21! Auto holding...")
+						continue
+
 					elif player.curnumber>21:
 						player.hold=True
 						self.activeplayers-=1
 						print("You got over 21. Bether luck next time. Auto holding...")
-				else:
+						continue
+					r=False
+					if player.isai:
+						r =player.askai()
+					else:
+						r = player.askhold()
 
-					self.
+					if r:
+						self.activeplayers-=1
+				else:
 					print ("player {0} is holding with value: {1}"format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
 				#to see if game has ended
-				
+				self.aimaxgame=player.aimaxincrease(self.aimaxgame)
 			print("End turn...")
 
 		
