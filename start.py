@@ -31,17 +31,17 @@ class Player:
 			self.askhold()
 			return False
 	def askai(self):
-		#ai tries to make a chanse to go closer it might go over if player beat their number in a atempt to win
+		#ron tries to make a chanse to go closer it might go over if player beat their number in a atempt to win
 		print("player %s turn:"%self.name)
 		if self.ainumberaim<self.curnumber:
-			print("Ai got the value %d it choose to not continue."%self.curnumber)
+			print("ron got the value %d it choose to not continue."%self.curnumber)
 			self.hold=True
 			return True
 		elif self.curnumber < self.aimax and self.curnumber <=20:
-			print("Ai got the value %d it choose to not continue."%self.curnumber)
+			print("ron got the value %d it choose to not continue."%self.curnumber)
 			return True
 		else:
-			print("Ai got the value %d it choose to continue."%self.curnumber)
+			print("ron got the value %d it choose to continue."%self.curnumber)
 			return False
 	def aimaxincrease(self, newnumb):
 		if self.aimax< newnumb:
@@ -58,8 +58,9 @@ class Game:
 		self.activeplayers=0
 		#aimax 
 		self.aimaxgame=0
+		self.first=""
 		print ("hello, lets play: Closest to 21")
-		print ("choose how many players, if only one player there will be 1 AI")
+		print ("choose how many players, if only one player there will be 1 ron")
 
 	def Runnloop(self):
 		#all active players
@@ -76,12 +77,13 @@ class Game:
 						continue
 					player.dealNumber(random.randint(1,13))
 					self.game=True
+					#if player is lucky
 					if player.curnumber == 21:
 						player.hold=True
 						self.activeplayers-=1
-						print("You got to 21! Auto holding...")
+						print("Player"+player.name+" got to 21! Auto holding...")
 						continue
-
+					#if player gets over the threshold
 					elif player.curnumber>21:
 						player.hold=True
 						self.activeplayers-=1
@@ -98,32 +100,17 @@ class Game:
 				else:
 					print ("player {0} is holding with the value: {1}".format(player.name,player.curnumber))
 					self.activeplayers-=1
-				#to see if game has ended
-				self.aimaxgame=player.aimaxincrease(self.aimaxgame)
+				self.aimaxgame=player.aimaxincrease(player.curnumber)
 				if player.curnumber==self.aimaxgame:
 					self.first=player.name
+			#to see if game has ended
 			if self.activeplayers<=0:
 				self.game=False
 				continue
 			print("End turn...")
 		print("Game over!")
 		print("Results:")
-		print("Firstplace goes to:"+self.first+". with the number: "+self.aimaxgame)
-
-
-
-		ask=input("play agen? y or n: ")
-		if ask=='y':
-			#reset
-			self.game=True
-			self.activeplayers=0
-			self.aimaxgame=0
-			self.first=""
-			self.Runnloop()
-		elif ask=='n':
-			print("Exiting gameloop.")
-		else: 
-			print ("Not valid answer... Exiting")
+		print("Firstplace goes to:"+self.first+". with the number: "+str(self.aimaxgame))
 			
 		
 	def playeraction(self):
