@@ -1,47 +1,75 @@
 #!/usr/bin/python3
 #def main():
 #	print ("Welcome to closest to 21")
-
+import random
 class Player:
    'Common base class for all employees'
    empCount = 0
 
-   def __init__(self, name,isai):
-      self.name = name
-      self.hold = False
-      self.isai = isai
-
-
+	def __init__(self, name,isai):
+		self.name = name
+		self.hold = False
+		self.isai = isai
+		self.curnumber=0
+		self.ainumberaim=random.radint(15,21)
+	def dealNumber(self,number):
+		#set new number value
+		self.curnumber=self.curnumber+number
+	def askhold(self):
+		ask=input("player %s! Your value is currently: %d. Do you hold? y for yes n for no" %dict(self.name,self.curnumber))
+		if ask=='y':
+			self.hold=True
+		elif ask=='n':
+		else: 
+			print ("Not valid answer...")
+			self.askhold()
+	def askai(self):
+		print("AI turn:")
+		if ainumberaim<curnumber:
+			print("Ai got the value %d it choose to not continiue."%curnumber)
+			self.hold=True
+		else:
+			print("Ai got the value %d it choose to continiue."%curnumber)
 class Game:
 	def __init__(self,):
 		self.playerlist=[]
+		self.game=True
 		print ("hello, lets play: Closest to 21")
 		print ("choose how many players, if only one player there will be 1 AI")
 	def startGame(self):
 		#starts the game
+
 		pass
-	def randomNumber(self):
-		#pick a random number from 1 to 13
-		pass
+
 	def Runnloop(self):
-		#run a game turn
-		pass
+		#run game turn
+		while self.game:
+			for player in self.playerlist:
+				if not player.hold:
+					player.askhold()
+					player.dealnumber(random.radint(1,13))
+					if player.curnumber == 21:
+						player.hold=True
+						print("You got to 21! Auto holding...")
+				else:
+					print ("player %s is holding with value: %d"dict(player.name, player.curnumber))
+		
 	def playeraction(self):
 		pass
 	def addPlayers(self):
-		#settup
+		#settup players
 		try:
-			players=int(input("Number of players:"))
+			players=int(input("Number of players(1-10):"))
 		except Exception as e:
-			print ("Not a valid input need valid number:")
+			print ("Not a valid input need valid number...")
 			self.addPlayers()
 		x=0
 		if players and players!=1 and players<10 and players <=1:	
-			while x < players:
+			for x in range(players):
 				playername= input("Player name:")
 				player=Player(playername,False)
 				self.playerlist.append(player)
-				x+=1
+				
 		elif players==1:
 			playername= input("Player name:")
 			player=Player(playername,False)
@@ -61,3 +89,4 @@ class Game:
 
 game=Game()
 game.addPlayers()
+game.startGame()
