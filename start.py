@@ -12,11 +12,12 @@ class Player:
 		self.isai = isai
 		self.curnumber=0
 		self.ainumberaim=random.radint(15,21)
+		self.activeplayers=0
 	def dealNumber(self,number):
 		#set new number value
 		self.curnumber=self.curnumber+number
 	def askhold(self):
-		ask=input("player %s! Your value is currently: %d. Do you hold? y for yes n for no" %dict(self.name,self.curnumber))
+		ask=input("player {0}! Your value is currently: {1}. Do you hold? y for yes n for no" format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
 		if ask=='y':
 			self.hold=True
 		elif ask=='n':
@@ -34,15 +35,14 @@ class Game:
 	def __init__(self,):
 		self.playerlist=[]
 		self.game=True
-		self.activeplayers={}
 		print ("hello, lets play: Closest to 21")
 		print ("choose how many players, if only one player there will be 1 AI")
 
 	def Runnloop(self):
 		#run game turn
-		self.activeplayers
-
-		for player in playerlist
+		self.activeplayers=len(self.playerlist)
+		print("There are currently " +players+"players")
+		for player in self.playerlist
 		while self.game:
 			for player in self.playerlist:
 				if not player.hold:
@@ -51,12 +51,16 @@ class Game:
 					self.game=True
 					if player.curnumber == 21:
 						player.hold=True
+						self.activeplayers-=1
 						print("You got to 21! Auto holding...")
-						self.game=False
+					elif player.curnumber>21:
+						player.hold=True
+						self.activeplayers-=1
+						print("You got over 21. Bether luck next time. Auto holding...")
 				else:
 
 					self.
-					print ("player %s is holding with value: %d"dict(player.name, player.curnumber))
+					print ("player {0} is holding with value: {1}"format(unicode(self.player.name,'utf-8'),unicode(self.player.curnumber,'utf-8')))
 				#to see if game has ended
 				
 			print("End turn...")
@@ -97,4 +101,4 @@ class Game:
 
 game=Game()
 game.addPlayers()
-game.startGame()
+game.Runnloop()
