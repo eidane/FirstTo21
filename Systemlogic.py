@@ -145,7 +145,9 @@ class Game:
 			self.addPlayers()
 
 #Start
-
-game=Game()
-game.addPlayers()
-game.Runnloop() 
+def main():
+	game=Game()
+	game.addPlayers()
+	game.Runnloop() 
+if __name__=="__main__":
+	main()
